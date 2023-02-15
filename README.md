@@ -27,4 +27,7 @@ npm i -D @types/node
 npm i -d tsx
 
 git --init
+
+npm i eslint -D 
+npm i @rocketseat/eslint-config -D //padrões utilizado no ignite
 ```
