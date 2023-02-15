@@ -9,5 +9,5 @@ app.get('/hello', async (req, rep)=>{
 app.listen({
     port: 3333
 }).then(()=>{
-    console.log("http server is running on port 33333")
+    console.log("http server is running on port 3333")
 })
