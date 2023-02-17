@@ -9,25 +9,21 @@ Api desenvolvida no curso de NodeJs | na Rocketseat no mês de fevereiro de 2023
 - SQLite
 - Typescript
 - Fastify
+- Zod
 
 ## Features
 
-- Import
--
+# REQUISITOS FUNCIONAIS
+[ ] O usuário deve poder criar uma nova transação
+[ ] O usuário deve poder obter um resumo da sua conta
+[ ] O usuário deve poder listar todas transações que já ocorreram
 
-## Installation
+# REGRA DE NEGÓCIO
+[ ] A transação pode ser do  tipo de crédito que somará ao valor total, ou débito  sutrairá
+[ ] Deve ser possível indentificarmos o usuário entre as requisições
+[ ] O usuário só pode visualizar transações o qual ele criou
 
-Instalação das dependemcias e inicialização do projeto.
+# REQUISITOS NÃO FUNCIONAIS
 
-```
-npm i
-npm i fastify
-npm i -D Typescript
-npm i -D @types/node
-npm i -d tsx
 
-git --init
 
-npm i eslint -D 
-npm i @rocketseat/eslint-config -D //padrões utilizado no ignite
-```
