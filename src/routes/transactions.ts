@@ -5,23 +5,20 @@ import { knex } from '../database'
 import { checkSessionIdExists } from '../middlewares/check-session-id'
 
 export async function transactionsRoutes(app: FastifyInstance) {
-  app.get(
-    '/',
-    {
-      preHandler: [checkSessionIdExists],
-    },
-    async (request) => {
-      const { sessionId } = request.cookies
+  // Hook global chamando o middleware de session id
+  app.addHook('preHandler', checkSessionIdExists)
 
-      const transactions = await knex('transactions')
-        .where('session_id', sessionId)
-        .select()
+  app.get('/', async (request) => {
+    const { sessionId } = request.cookies
 
-      return {
-        transactions,
-      }
-    },
-  )
+    const transactions = await knex('transactions')
+      .where('session_id', sessionId)
+      .select()
+
+    return {
+      transactions,
+    }
+  })
 
   app.get('/summary', async (request) => {
     const { sessionId } = request.cookies
