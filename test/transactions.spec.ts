@@ -79,4 +79,33 @@ describe('Transactions routes', () => {
       listTransactionResponse.body.transactions[0],
     )
   })
+
+  // deve ser possível listar o summário das transações
+  it('should be able to get the summary transactions', async () => {
+    const debitTransaction = await request(app.server)
+      .post('/transactions')
+      .send({
+        title: 'New credit Transaction',
+        amount: 5000,
+        type: 'credit',
+      })
+
+    const cookies = debitTransaction.get('Set-Cookie')
+
+    await request(app.server)
+      .post('/transactions')
+      .send({
+        title: 'New debit Transaction',
+        amount: 109,
+        type: 'debit',
+      })
+      .set('Cookie', cookies)
+
+    const summaryResponse = await request(app.server)
+      .get('/transactions/summary')
+      .set('Cookie', cookies)
+      .expect(200)
+
+    expect(summaryResponse.body.summary.amount).toEqual(4891)
+  })
 })
