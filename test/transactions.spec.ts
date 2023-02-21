@@ -53,4 +53,30 @@ describe('Transactions routes', () => {
       }),
     ])
   })
+
+  // deve ser possível listar uma transação específica
+  it('should be able to get a specifc transaction', async () => {
+    const response = await request(app.server).post('/transactions').send({
+      title: 'New Transaction',
+      amount: 500,
+      type: 'credit',
+    })
+
+    const cookies = response.get('Set-Cookie')
+
+    const listTransactionResponse = await request(app.server)
+      .get('/transactions')
+      .set('Cookie', cookies)
+
+    const id = listTransactionResponse.body.transactions[0].id
+
+    const transaction = await request(app.server)
+      .get(`/transactions/${id}`)
+      .set('Cookie', cookies)
+      .expect(200)
+
+    expect(transaction.body.transaction).toEqual(
+      listTransactionResponse.body.transactions[0],
+    )
+  })
 })
