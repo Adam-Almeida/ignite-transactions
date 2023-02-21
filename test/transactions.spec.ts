@@ -1,6 +1,7 @@
-import { describe, it, beforeAll, afterAll, expect } from 'vitest'
+import { describe, it, beforeAll, afterAll, expect, beforeEach } from 'vitest'
 import request from 'supertest'
 import { app } from '../src/app'
+import { execSync } from 'node:child_process'
 
 describe('Transactions routes', () => {
   // aguardando que a applicação esteja carregada completamente
@@ -11,6 +12,11 @@ describe('Transactions routes', () => {
   // finalizando a applicação após a execução do test
   afterAll(async () => {
     await app.close()
+  })
+
+  beforeEach(() => {
+    execSync('npm run knex migrate:rollback --all')
+    execSync('npm run knex migrate:latest')
   })
 
   // deve ser possivel a criação de uma nova transação com reponse de status 201
